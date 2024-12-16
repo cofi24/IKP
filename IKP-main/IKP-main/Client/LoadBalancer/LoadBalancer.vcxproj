@@ -127,12 +127,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ClientCommunication.cpp" />
+    <ClCompile Include="hash_map.cpp" />
     <ClCompile Include="list.cpp" />
-    <ClCompile Include="LoadBalancer.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="queue.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="hash_map.h" />
     <ClInclude Include="list.h" />
     <ClInclude Include="queue.h" />
   </ItemGroup>

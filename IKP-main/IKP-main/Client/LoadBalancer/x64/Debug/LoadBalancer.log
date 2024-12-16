@@ -1,2 +1,4 @@
-﻿  LoadBalancer.cpp
-  LoadBalancer.vcxproj -> C:\Users\10\Desktop\IKP1\IKP-main\Client\x64\Debug\LoadBalancer.exe
+﻿  list.cpp
+C:\Users\cofi24\Desktop\Git uploads\IKP\IKP-main\IKP-main\Client\LoadBalancer\list.cpp(10,10): warning C4477: 'printf' : format string '%d' requires an argument of type 'int', but variadic argument 2 has type 'HANDLE'
+C:\Users\cofi24\Desktop\Git uploads\IKP\IKP-main\IKP-main\Client\LoadBalancer\list.cpp(10,10): warning C4313: 'printf': '%d' in format string conflicts with argument 2 of type 'HANDLE'
+  LoadBalancer.vcxproj -> C:\Users\cofi24\Desktop\Git uploads\IKP\IKP-main\IKP-main\Client\x64\Debug\LoadBalancer.exe
