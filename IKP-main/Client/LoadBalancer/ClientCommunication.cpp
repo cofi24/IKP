@@ -10,7 +10,6 @@
 #include "ClientCommunication.h"
 #include "queue.h"
 #include "hash_map.h"
-#include "conio.h"
 #pragma warning(disable:4996)
 #pragma comment (lib, "Ws2_32.lib")
 #pragma comment (lib, "Mswsock.lib")
@@ -21,7 +20,11 @@
 #define CLIENT_NAME_LEN 5 
 #define SERVER_PORT 5059
 static int client_count = 0;
-DWORD WINAPI read_write_thread(LPVOID param) {
+static queue* q = NULL;
+
+
+
+DWORD WINAPI client_read_write(LPVOID param) {
     SOCKET acceptedSocket = (SOCKET)param;
     //u_long non_blocking = 1;
     //ioctlsocket(acceptedSocket, FIONBIO, &non_blocking);
@@ -44,6 +47,7 @@ DWORD WINAPI read_write_thread(LPVOID param) {
             }
             // Log message text
             printf("Client %d sent: %s.\n", client_num, dataBuffer);
+            enqueue(q, dataBuffer);
         }
         else if (iResult == 0)	// Check if shutdown command is received
         {
@@ -68,7 +72,10 @@ DWORD WINAPI read_write_thread(LPVOID param) {
         }*/
     } while (true);
 }
-DWORD WINAPI listenerClient(LPVOID param) {
+
+
+DWORD WINAPI client_listener(LPVOID param) {
+    q = (queue*)param;
     // Socket used for listening for new clients 
     SOCKET listenSocket = INVALID_SOCKET;
     // Socket used for communication with client
@@ -122,7 +129,7 @@ DWORD WINAPI listenerClient(LPVOID param) {
         WSACleanup();
         return 1;
     }
-    printf("Server socket is set to listening mode. Waiting for new connection requests.\n");
+    printf("Client listener socket is set to listening mode. Waiting for new connection requests.\n");
     do
     {
         // Struct for information about connected client
@@ -142,7 +149,7 @@ DWORD WINAPI listenerClient(LPVOID param) {
         //create a new thread for a new client connected
         HANDLE hClient;
         DWORD ClientID;
-        hClient = CreateThread(NULL, 0, &read_write_thread, (LPVOID)acceptedSocket, 0, &ClientID);
+        hClient = CreateThread(NULL, 0, &client_read_write, (LPVOID)acceptedSocket, 0, &ClientID);
         //add it to the hash table
         client_thread* newCli = (client_thread*)malloc(sizeof(client_thread));
         sprintf(clientName, "Client%d", client_count);
@@ -170,39 +177,3 @@ DWORD WINAPI listenerClient(LPVOID param) {
     return 0;
 }
 
-DWORD WINAPI clientFunc(LPVOID lpParam) {
-
-	int iResult;
-	char dataBuffer[BUFFER_SIZE];
-
-	SOCKET listenSocket = *(SOCKET*)lpParam;
-
-	SOCKET acceptedSocket = accept(listenSocket, NULL, NULL);
-
-	if (acceptedSocket == INVALID_SOCKET) {
-		printf("accept failed");
-		closesocket(listenSocket);
-		WSACleanup();
-		return 1;
-	}
-
-	do {
-		iResult = recv(acceptedSocket, dataBuffer, BUFFER_SIZE, 0);
-
-		if (iResult > 0) {
-			dataBuffer[iResult] = '\0';
-			printf("client sent %s \n", dataBuffer);
-		}
-		else if (iResult == 0) {
-			printf("connection closed");
-			closesocket(acceptedSocket);
-		}
-		else {
-			printf("recv failed with error");
-			closesocket(acceptedSocket);
-		}
-	} while (dataBuffer != "termite");
-
-
-	return 0;
-}

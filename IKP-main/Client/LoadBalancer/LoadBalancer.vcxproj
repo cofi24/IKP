@@ -132,12 +132,16 @@
     <ClCompile Include="list.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="queue.cpp" />
+    <ClCompile Include="testing.cpp" />
+    <ClCompile Include="WorkerCommunication.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ClientCommunication.h" />
     <ClInclude Include="hash_map.h" />
     <ClInclude Include="list.h" />
     <ClInclude Include="queue.h" />
+    <ClInclude Include="testing.h" />
+    <ClInclude Include="WorkerCommunication.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

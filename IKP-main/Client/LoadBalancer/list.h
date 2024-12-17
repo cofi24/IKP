@@ -2,42 +2,29 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdbool.h>
-#include "conio.h"
+
 #include <windows.h>
-/*
-struct list {
-	HANDLE data;
-	int key;
-	struct list* next;
-	struct list* head;
-	struct list* current;
-	struct list* tail;
-};
-
-
-
-void printList(struct list* ptr);
-struct list* deleteFirst();
-struct list* insertFirst(int key, HANDLE data);
-struct list* insertLast(int key, HANDLE data);
-bool isEmpty();
-struct list* find(int key);
-struct list* deleteElem(int key);
-
-*/
 
 typedef struct node {
 	HANDLE thread_handle;
 	struct node* next;
-} node_t;
+} node;
+
+typedef struct {
+	node* head;
+	node* current;
+	node* tail;
+	CRITICAL_SECTION cs;
+}list;
 
 
-void createList(node_t** head, node_t** tail);
-void insertLastNode(HANDLE data, node_t** head, node_t** tail);
-void insertFirstNode(HANDLE data, node_t** head, node_t** tail);
-void deleteNode(HANDLE data, node_t** head, node_t** tail);
-void print_list(node_t* head);
-#pragma once
 
 
-#pragma once
+
+void init_list(list** l);
+void insert_first_node(HANDLE data, list* l);
+void insert_last_node(HANDLE data, list* l);
+void delete_node(HANDLE data, list* l);
+void print_list(list* l);
+void delete_list(list* l);
+
