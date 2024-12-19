@@ -1,41 +1,45 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\cofi24\\Desktop\\Git uploads\\IKP\\IKP-main\\IKP-main\\Client\\",
+  "WorkspaceRootPath": "C:\\Users\\cofi24\\Desktop\\Git uploads\\IKP\\IKP-main\\Client\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{77BAA3E5-4DDB-4299-8F67-6472D1E425EF}|LoadBalancer\\LoadBalancer.vcxproj|C:\\Users\\cofi24\\Desktop\\Git uploads\\IKP\\IKP-main\\IKP-main\\Client\\LoadBalancer\\list.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{77BAA3E5-4DDB-4299-8F67-6472D1E425EF}|LoadBalancer\\LoadBalancer.vcxproj|solutionrelative:LoadBalancer\\list.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+      "AbsoluteMoniker": "D:0:0:{A7ABAFB6-DE49-42E1-9C8C-9D5E06246C84}|Worker\\Worker.vcxproj|C:\\Users\\cofi24\\Desktop\\Git uploads\\IKP\\IKP-main\\Client\\Worker\\Worker.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A7ABAFB6-DE49-42E1-9C8C-9D5E06246C84}|Worker\\Worker.vcxproj|solutionrelative:Worker\\Worker.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{DFC6DFA8-69BA-43E8-8DAD-9F8058D98337}|Client\\Client.vcxproj|C:\\Users\\cofi24\\Desktop\\Git uploads\\IKP\\IKP-main\\IKP-main\\Client\\Client\\Client.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{DFC6DFA8-69BA-43E8-8DAD-9F8058D98337}|Client\\Client.vcxproj|solutionrelative:Client\\Client.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{77BAA3E5-4DDB-4299-8F67-6472D1E425EF}|LoadBalancer\\LoadBalancer.vcxproj|C:\\Users\\cofi24\\Desktop\\Git uploads\\IKP\\IKP-main\\IKP-main\\Client\\LoadBalancer\\hash_map.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{77BAA3E5-4DDB-4299-8F67-6472D1E425EF}|LoadBalancer\\LoadBalancer.vcxproj|solutionrelative:LoadBalancer\\hash_map.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{77BAA3E5-4DDB-4299-8F67-6472D1E425EF}|LoadBalancer\\LoadBalancer.vcxproj|C:\\Users\\cofi24\\Desktop\\Git uploads\\IKP\\IKP-main\\IKP-main\\Client\\LoadBalancer\\list.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{77BAA3E5-4DDB-4299-8F67-6472D1E425EF}|LoadBalancer\\LoadBalancer.vcxproj|solutionrelative:LoadBalancer\\list.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{77BAA3E5-4DDB-4299-8F67-6472D1E425EF}|LoadBalancer\\LoadBalancer.vcxproj|C:\\Users\\cofi24\\Desktop\\Git uploads\\IKP\\IKP-main\\IKP-main\\Client\\LoadBalancer\\queue.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{77BAA3E5-4DDB-4299-8F67-6472D1E425EF}|LoadBalancer\\LoadBalancer.vcxproj|solutionrelative:LoadBalancer\\queue.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{77BAA3E5-4DDB-4299-8F67-6472D1E425EF}|LoadBalancer\\LoadBalancer.vcxproj|C:\\Users\\cofi24\\Desktop\\Git uploads\\IKP\\IKP-main\\IKP-main\\Client\\LoadBalancer\\main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "AbsoluteMoniker": "D:0:0:{77BAA3E5-4DDB-4299-8F67-6472D1E425EF}|LoadBalancer\\LoadBalancer.vcxproj|C:\\Users\\cofi24\\Desktop\\Git uploads\\IKP\\IKP-main\\Client\\LoadBalancer\\main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{77BAA3E5-4DDB-4299-8F67-6472D1E425EF}|LoadBalancer\\LoadBalancer.vcxproj|solutionrelative:LoadBalancer\\main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{77BAA3E5-4DDB-4299-8F67-6472D1E425EF}|LoadBalancer\\LoadBalancer.vcxproj|C:\\Users\\cofi24\\Desktop\\Git uploads\\IKP\\IKP-main\\IKP-main\\Client\\LoadBalancer\\hash_map.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{77BAA3E5-4DDB-4299-8F67-6472D1E425EF}|LoadBalancer\\LoadBalancer.vcxproj|solutionrelative:LoadBalancer\\hash_map.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+      "AbsoluteMoniker": "D:0:0:{77BAA3E5-4DDB-4299-8F67-6472D1E425EF}|LoadBalancer\\LoadBalancer.vcxproj|C:\\Users\\cofi24\\Desktop\\Git uploads\\IKP\\IKP-main\\Client\\LoadBalancer\\hash_map.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{77BAA3E5-4DDB-4299-8F67-6472D1E425EF}|LoadBalancer\\LoadBalancer.vcxproj|solutionrelative:LoadBalancer\\hash_map.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{77BAA3E5-4DDB-4299-8F67-6472D1E425EF}|LoadBalancer\\LoadBalancer.vcxproj|C:\\Users\\cofi24\\Desktop\\Git uploads\\IKP\\IKP-main\\IKP-main\\Client\\LoadBalancer\\ClientCommunication.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "AbsoluteMoniker": "D:0:0:{77BAA3E5-4DDB-4299-8F67-6472D1E425EF}|LoadBalancer\\LoadBalancer.vcxproj|C:\\Users\\cofi24\\Desktop\\Git uploads\\IKP\\IKP-main\\Client\\LoadBalancer\\list.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{77BAA3E5-4DDB-4299-8F67-6472D1E425EF}|LoadBalancer\\LoadBalancer.vcxproj|solutionrelative:LoadBalancer\\list.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{77BAA3E5-4DDB-4299-8F67-6472D1E425EF}|LoadBalancer\\LoadBalancer.vcxproj|C:\\Users\\cofi24\\Desktop\\Git uploads\\IKP\\IKP-main\\Client\\LoadBalancer\\ClientCommunication.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{77BAA3E5-4DDB-4299-8F67-6472D1E425EF}|LoadBalancer\\LoadBalancer.vcxproj|solutionrelative:LoadBalancer\\ClientCommunication.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{77BAA3E5-4DDB-4299-8F67-6472D1E425EF}|LoadBalancer\\LoadBalancer.vcxproj|C:\\Users\\cofi24\\Desktop\\Git uploads\\IKP\\IKP-main\\IKP-main\\Client\\LoadBalancer\\queue.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "AbsoluteMoniker": "D:0:0:{77BAA3E5-4DDB-4299-8F67-6472D1E425EF}|LoadBalancer\\LoadBalancer.vcxproj|C:\\Users\\cofi24\\Desktop\\Git uploads\\IKP\\IKP-main\\Client\\LoadBalancer\\list.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{77BAA3E5-4DDB-4299-8F67-6472D1E425EF}|LoadBalancer\\LoadBalancer.vcxproj|solutionrelative:LoadBalancer\\list.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{77BAA3E5-4DDB-4299-8F67-6472D1E425EF}|LoadBalancer\\LoadBalancer.vcxproj|C:\\Users\\cofi24\\Desktop\\Git uploads\\IKP\\IKP-main\\Client\\LoadBalancer\\hash_map.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{77BAA3E5-4DDB-4299-8F67-6472D1E425EF}|LoadBalancer\\LoadBalancer.vcxproj|solutionrelative:LoadBalancer\\hash_map.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{77BAA3E5-4DDB-4299-8F67-6472D1E425EF}|LoadBalancer\\LoadBalancer.vcxproj|C:\\Users\\cofi24\\Desktop\\Git uploads\\IKP\\IKP-main\\Client\\LoadBalancer\\queue.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{77BAA3E5-4DDB-4299-8F67-6472D1E425EF}|LoadBalancer\\LoadBalancer.vcxproj|solutionrelative:LoadBalancer\\queue.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DFC6DFA8-69BA-43E8-8DAD-9F8058D98337}|Client\\Client.vcxproj|C:\\Users\\cofi24\\Desktop\\Git uploads\\IKP\\IKP-main\\Client\\Client\\Client.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{DFC6DFA8-69BA-43E8-8DAD-9F8058D98337}|Client\\Client.vcxproj|solutionrelative:Client\\Client.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{77BAA3E5-4DDB-4299-8F67-6472D1E425EF}|LoadBalancer\\LoadBalancer.vcxproj|C:\\Users\\cofi24\\Desktop\\Git uploads\\IKP\\IKP-main\\Client\\LoadBalancer\\queue.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{77BAA3E5-4DDB-4299-8F67-6472D1E425EF}|LoadBalancer\\LoadBalancer.vcxproj|solutionrelative:LoadBalancer\\queue.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     }
   ],
@@ -46,124 +50,128 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "list.cpp",
-              "DocumentMoniker": "C:\\Users\\cofi24\\Desktop\\Git uploads\\IKP\\IKP-main\\IKP-main\\Client\\LoadBalancer\\list.cpp",
-              "RelativeDocumentMoniker": "LoadBalancer\\list.cpp",
-              "ToolTip": "C:\\Users\\cofi24\\Desktop\\Git uploads\\IKP\\IKP-main\\IKP-main\\Client\\LoadBalancer\\list.cpp",
-              "RelativeToolTip": "LoadBalancer\\list.cpp",
-              "ViewState": "AgIAAFYAAAAAAAAAAAAswGkAAAAdAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2024-12-15T17:26:54.025Z",
-              "EditorCaption": ""
+              "DocumentIndex": 2,
+              "Title": "hash_map.h",
+              "DocumentMoniker": "C:\\Users\\cofi24\\Desktop\\Git uploads\\IKP\\IKP-main\\Client\\LoadBalancer\\hash_map.h",
+              "RelativeDocumentMoniker": "LoadBalancer\\hash_map.h",
+              "ToolTip": "C:\\Users\\cofi24\\Desktop\\Git uploads\\IKP\\IKP-main\\Client\\LoadBalancer\\hash_map.h",
+              "RelativeToolTip": "LoadBalancer\\hash_map.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAcAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-12-16T11:46:47.791Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 5,
-              "Title": "main.cpp",
-              "DocumentMoniker": "C:\\Users\\cofi24\\Desktop\\Git uploads\\IKP\\IKP-main\\IKP-main\\Client\\LoadBalancer\\main.cpp",
-              "RelativeDocumentMoniker": "LoadBalancer\\main.cpp",
-              "ToolTip": "C:\\Users\\cofi24\\Desktop\\Git uploads\\IKP\\IKP-main\\IKP-main\\Client\\LoadBalancer\\main.cpp",
-              "RelativeToolTip": "LoadBalancer\\main.cpp",
-              "ViewState": "AgIAACsAAAAAAAAAAAAIwCEBAAAFAAAAAAAAAA==",
+              "Title": "list.cpp",
+              "DocumentMoniker": "C:\\Users\\cofi24\\Desktop\\Git uploads\\IKP\\IKP-main\\Client\\LoadBalancer\\list.cpp",
+              "RelativeDocumentMoniker": "LoadBalancer\\list.cpp",
+              "ToolTip": "C:\\Users\\cofi24\\Desktop\\Git uploads\\IKP\\IKP-main\\Client\\LoadBalancer\\list.cpp",
+              "RelativeToolTip": "LoadBalancer\\list.cpp",
+              "ViewState": "AgIAAAUAAAAAAAAAAAAswB0AAAAhAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2024-12-15T17:18:43.038Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Client.cpp",
-              "DocumentMoniker": "C:\\Users\\cofi24\\Desktop\\Git uploads\\IKP\\IKP-main\\IKP-main\\Client\\Client\\Client.cpp",
-              "RelativeDocumentMoniker": "Client\\Client.cpp",
-              "ToolTip": "C:\\Users\\cofi24\\Desktop\\Git uploads\\IKP\\IKP-main\\IKP-main\\Client\\Client\\Client.cpp",
-              "RelativeToolTip": "Client\\Client.cpp",
-              "ViewState": "AgIAAEgAAAAAAAAAAAAAAE4AAAACAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2024-12-14T12:54:20.968Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "queue.h",
-              "DocumentMoniker": "C:\\Users\\cofi24\\Desktop\\Git uploads\\IKP\\IKP-main\\IKP-main\\Client\\LoadBalancer\\queue.h",
-              "RelativeDocumentMoniker": "LoadBalancer\\queue.h",
-              "ToolTip": "C:\\Users\\cofi24\\Desktop\\Git uploads\\IKP\\IKP-main\\IKP-main\\Client\\LoadBalancer\\queue.h",
-              "RelativeToolTip": "LoadBalancer\\queue.h",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2024-12-16T11:47:06.699Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-15T17:26:54.025Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
               "Title": "list.h",
-              "DocumentMoniker": "C:\\Users\\cofi24\\Desktop\\Git uploads\\IKP\\IKP-main\\IKP-main\\Client\\LoadBalancer\\list.h",
+              "DocumentMoniker": "C:\\Users\\cofi24\\Desktop\\Git uploads\\IKP\\IKP-main\\Client\\LoadBalancer\\list.h",
               "RelativeDocumentMoniker": "LoadBalancer\\list.h",
-              "ToolTip": "C:\\Users\\cofi24\\Desktop\\Git uploads\\IKP\\IKP-main\\IKP-main\\Client\\LoadBalancer\\list.h",
+              "ToolTip": "C:\\Users\\cofi24\\Desktop\\Git uploads\\IKP\\IKP-main\\Client\\LoadBalancer\\list.h",
               "RelativeToolTip": "LoadBalancer\\list.h",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABsAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAWAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2024-12-15T17:26:11.447Z",
+              "WhenOpened": "2024-12-15T17:26:11.447Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Worker.cpp",
+              "DocumentMoniker": "C:\\Users\\cofi24\\Desktop\\Git uploads\\IKP\\IKP-main\\Client\\Worker\\Worker.cpp",
+              "RelativeDocumentMoniker": "Worker\\Worker.cpp",
+              "ToolTip": "C:\\Users\\cofi24\\Desktop\\Git uploads\\IKP\\IKP-main\\Client\\Worker\\Worker.cpp",
+              "RelativeToolTip": "Worker\\Worker.cpp",
+              "ViewState": "AgIAAGAAAAAAAAAAAAAAAGoAAAAvAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-12-19T11:51:58.85Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "hash_map.h",
-              "DocumentMoniker": "C:\\Users\\cofi24\\Desktop\\Git uploads\\IKP\\IKP-main\\IKP-main\\Client\\LoadBalancer\\hash_map.h",
-              "RelativeDocumentMoniker": "LoadBalancer\\hash_map.h",
-              "ToolTip": "C:\\Users\\cofi24\\Desktop\\Git uploads\\IKP\\IKP-main\\IKP-main\\Client\\LoadBalancer\\hash_map.h",
-              "RelativeToolTip": "LoadBalancer\\hash_map.h",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAATAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2024-12-16T11:46:47.791Z",
-              "EditorCaption": ""
+              "DocumentIndex": 1,
+              "Title": "main.cpp",
+              "DocumentMoniker": "C:\\Users\\cofi24\\Desktop\\Git uploads\\IKP\\IKP-main\\Client\\LoadBalancer\\main.cpp",
+              "RelativeDocumentMoniker": "LoadBalancer\\main.cpp",
+              "ToolTip": "C:\\Users\\cofi24\\Desktop\\Git uploads\\IKP\\IKP-main\\Client\\LoadBalancer\\main.cpp",
+              "RelativeToolTip": "LoadBalancer\\main.cpp",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAALgAAAAjAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-12-15T17:18:43.038Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "ClientCommunication.cpp",
+              "DocumentMoniker": "C:\\Users\\cofi24\\Desktop\\Git uploads\\IKP\\IKP-main\\Client\\LoadBalancer\\ClientCommunication.cpp",
+              "RelativeDocumentMoniker": "LoadBalancer\\ClientCommunication.cpp",
+              "ToolTip": "C:\\Users\\cofi24\\Desktop\\Git uploads\\IKP\\IKP-main\\Client\\LoadBalancer\\ClientCommunication.cpp",
+              "RelativeToolTip": "LoadBalancer\\ClientCommunication.cpp",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-12-16T12:03:33.147Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 6,
               "Title": "hash_map.cpp",
-              "DocumentMoniker": "C:\\Users\\cofi24\\Desktop\\Git uploads\\IKP\\IKP-main\\IKP-main\\Client\\LoadBalancer\\hash_map.cpp",
+              "DocumentMoniker": "C:\\Users\\cofi24\\Desktop\\Git uploads\\IKP\\IKP-main\\Client\\LoadBalancer\\hash_map.cpp",
               "RelativeDocumentMoniker": "LoadBalancer\\hash_map.cpp",
-              "ToolTip": "C:\\Users\\cofi24\\Desktop\\Git uploads\\IKP\\IKP-main\\IKP-main\\Client\\LoadBalancer\\hash_map.cpp",
+              "ToolTip": "C:\\Users\\cofi24\\Desktop\\Git uploads\\IKP\\IKP-main\\Client\\LoadBalancer\\hash_map.cpp",
               "RelativeToolTip": "LoadBalancer\\hash_map.cpp",
-              "ViewState": "AgIAACgAAAAAAAAAAAAswFgAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAACEAAAAAAAAAAAAAAFgAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2024-12-16T11:50:52.78Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-16T11:50:52.78Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 7,
-              "Title": "ClientCommunication.cpp",
-              "DocumentMoniker": "C:\\Users\\cofi24\\Desktop\\Git uploads\\IKP\\IKP-main\\IKP-main\\Client\\LoadBalancer\\ClientCommunication.cpp",
-              "RelativeDocumentMoniker": "LoadBalancer\\ClientCommunication.cpp",
-              "ToolTip": "C:\\Users\\cofi24\\Desktop\\Git uploads\\IKP\\IKP-main\\IKP-main\\Client\\LoadBalancer\\ClientCommunication.cpp",
-              "RelativeToolTip": "LoadBalancer\\ClientCommunication.cpp",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAACkAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2024-12-16T12:03:33.147Z",
-              "EditorCaption": ""
+              "Title": "queue.h",
+              "DocumentMoniker": "C:\\Users\\cofi24\\Desktop\\Git uploads\\IKP\\IKP-main\\Client\\LoadBalancer\\queue.h",
+              "RelativeDocumentMoniker": "LoadBalancer\\queue.h",
+              "ToolTip": "C:\\Users\\cofi24\\Desktop\\Git uploads\\IKP\\IKP-main\\Client\\LoadBalancer\\queue.h",
+              "RelativeToolTip": "LoadBalancer\\queue.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-12-16T11:47:06.699Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 8,
+              "Title": "Client.cpp",
+              "DocumentMoniker": "C:\\Users\\cofi24\\Desktop\\Git uploads\\IKP\\IKP-main\\Client\\Client\\Client.cpp",
+              "RelativeDocumentMoniker": "Client\\Client.cpp",
+              "ToolTip": "C:\\Users\\cofi24\\Desktop\\Git uploads\\IKP\\IKP-main\\Client\\Client\\Client.cpp",
+              "RelativeToolTip": "Client\\Client.cpp",
+              "ViewState": "AgIAAEgAAAAAAAAAAAAAAE4AAAACAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-12-14T12:54:20.968Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
               "Title": "queue.cpp",
-              "DocumentMoniker": "C:\\Users\\cofi24\\Desktop\\Git uploads\\IKP\\IKP-main\\IKP-main\\Client\\LoadBalancer\\queue.cpp",
+              "DocumentMoniker": "C:\\Users\\cofi24\\Desktop\\Git uploads\\IKP\\IKP-main\\Client\\LoadBalancer\\queue.cpp",
               "RelativeDocumentMoniker": "LoadBalancer\\queue.cpp",
-              "ToolTip": "C:\\Users\\cofi24\\Desktop\\Git uploads\\IKP\\IKP-main\\IKP-main\\Client\\LoadBalancer\\queue.cpp",
+              "ToolTip": "C:\\Users\\cofi24\\Desktop\\Git uploads\\IKP\\IKP-main\\Client\\LoadBalancer\\queue.cpp",
               "RelativeToolTip": "LoadBalancer\\queue.cpp",
               "ViewState": "AgIAAEgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2024-12-15T17:18:47.5Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-15T17:18:47.5Z"
             }
           ]
         }
