@@ -14,11 +14,10 @@ void init_list(list** l) {
 	InitializeCriticalSection(&(*l)->cs);
 }
 
-void insert_first_node(HANDLE data, list* l) {
+void insert_first_node(node* new_node, list* l) {
 	EnterCriticalSection(&l->cs);
-	node* new_node = (node*)malloc(sizeof(node));
-	new_node->thread_handle = data;
-	new_node->next = l->head;
+	
+
 
 	if (l->tail == NULL) {
 		l->tail = new_node;
@@ -27,12 +26,9 @@ void insert_first_node(HANDLE data, list* l) {
 	l->head = new_node;
 	LeaveCriticalSection(&l->cs);
 }
-void insert_last_node(HANDLE data, list* l) {
+void insert_last_node(node* new_node, list* l) {
 	EnterCriticalSection(&l->cs);
-	node* new_node = (node*)malloc(sizeof(node));
-
-	new_node->thread_handle = data;
-	new_node->next = NULL;
+	
 
 	if (l->head == NULL) {
 		l->head = new_node;
@@ -46,12 +42,12 @@ void insert_last_node(HANDLE data, list* l) {
 	LeaveCriticalSection(&l->cs);
 }
 
-void delete_node(HANDLE data, list* l) {
+void delete_node(node* new_node, list* l) {
 	EnterCriticalSection(&l->cs);
 	node* current = l->head;
 	node* previous = NULL;
 
-	while (current != NULL && current->thread_handle != data) {
+	while (current != NULL && current!=new_node) {
 		previous = current;
 		current = current->next;
 	}
@@ -82,10 +78,13 @@ void print_list(list* l) {
 	printf("LIST: \n");
 	node* current = l->head;
 	while (current != NULL) {
-
-		WCHAR* thread_name = NULL;
-		GetThreadDescription(current->thread_handle, &thread_name);
-		printf("[%ls]->", thread_name);
+		WCHAR* thread_name_READ = NULL;
+		WCHAR* thread_name_WRITE = NULL;
+		GetThreadDescription(current->thread_read, &thread_name_READ);
+		printf("[%ls]->", thread_name_READ);
+		GetThreadDescription(current->thread_write, &thread_name_WRITE);
+		printf("[%ls]->", thread_name_WRITE);
+		
 		current = current->next;
 	}
 	printf("\n");

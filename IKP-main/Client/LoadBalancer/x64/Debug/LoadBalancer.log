@@ -1,24 +1,13 @@
-﻿  ClientCommunication.cpp
-  hash_map.cpp
-C:\Users\cofi24\Desktop\Git uploads\IKP\IKP-main\Client\LoadBalancer\ClientCommunication.cpp(20,9): warning C4005: 'CLIENT_NAME_LEN': macro redefinition
+﻿  WorkerCommunication.cpp
+C:\Users\cofi24\Desktop\Git uploads\IKP\IKP-main\Client\LoadBalancer\WorkerCommunication.cpp(17,9): warning C4005: 'CLIENT_NAME_LEN': macro redefinition
       C:\Users\cofi24\Desktop\Git uploads\IKP\IKP-main\Client\LoadBalancer\hash_map.h(3,9):
       see previous definition of 'CLIENT_NAME_LEN'
   
-C:\Users\cofi24\Desktop\Git uploads\IKP\IKP-main\Client\LoadBalancer\ClientCommunication.cpp(86,10): warning C4101: 'dataBuffer': unreferenced local variable
-C:\Users\cofi24\Desktop\Git uploads\IKP\IKP-main\Client\LoadBalancer\hash_map.cpp(10,13): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-  list.cpp
-  main.cpp
-C:\Users\cofi24\Desktop\Git uploads\IKP\IKP-main\Client\LoadBalancer\main.cpp(33,26): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-  queue.cpp
-  testing.cpp
-  WorkerCommunication.cpp
-C:\Users\cofi24\Desktop\Git uploads\IKP\IKP-main\Client\LoadBalancer\WorkerCommunication.cpp(15,9): warning C4005: 'CLIENT_NAME_LEN': macro redefinition
-      C:\Users\cofi24\Desktop\Git uploads\IKP\IKP-main\Client\LoadBalancer\hash_map.h(3,9):
-      see previous definition of 'CLIENT_NAME_LEN'
+C:\Users\cofi24\Desktop\Git uploads\IKP\IKP-main\Client\LoadBalancer\WorkerCommunication.cpp(56,9): error C2664: 'char *strcpy(char *,const char *)': cannot convert argument 2 from 'char' to 'const char *'
+      C:\Users\cofi24\Desktop\Git uploads\IKP\IKP-main\Client\LoadBalancer\WorkerCommunication.cpp(56,21):
+      Conversion from integral type to pointer type requires reinterpret_cast, C-style cast or parenthesized function-style cast
+      C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\ucrt\string.h(130,1):
+      see declaration of 'strcpy'
+      C:\Users\cofi24\Desktop\Git uploads\IKP\IKP-main\Client\LoadBalancer\WorkerCommunication.cpp(56,9):
+      while trying to match the argument list '(char *, char)'
   
-C:\Users\cofi24\Desktop\Git uploads\IKP\IKP-main\Client\LoadBalancer\WorkerCommunication.cpp(74,10): warning C4101: 'clientName': unreferenced local variable
-C:\Users\cofi24\Desktop\Git uploads\IKP\IKP-main\Client\LoadBalancer\WorkerCommunication.cpp(73,10): warning C4101: 'dataBuffer': unreferenced local variable
-  Generating Code...
-C:\Users\cofi24\Desktop\Git uploads\IKP\IKP-main\Client\LoadBalancer\WorkerCommunication.cpp(64,1): warning C4715: 'worker_read_write': not all control paths return a value
-C:\Users\cofi24\Desktop\Git uploads\IKP\IKP-main\Client\LoadBalancer\ClientCommunication.cpp(74,1): warning C4715: 'client_read_write': not all control paths return a value
-  LoadBalancer.vcxproj -> C:\Users\cofi24\Desktop\Git uploads\IKP\IKP-main\Client\x64\Debug\LoadBalancer.exe

@@ -20,7 +20,7 @@
 #define CLIENT_NAME_LEN 5 
 #define SERVER_PORT 5059
 static int client_count = 0;
-static queue* q = NULL;
+//static queue* q = NULL;
 
 
 
