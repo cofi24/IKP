@@ -8,13 +8,15 @@
 #include "queue.h"
 #include "hash_map.h"
 #include "list.h"
+#include <string.h>
+
 
 #pragma warning(disable:4996)
 #pragma comment (lib, "Ws2_32.lib")
 #pragma comment (lib, "Mswsock.lib")
 #pragma comment (lib, "AdvApi32.lib")
 #define BUFFER_SIZE 256
-#define CLIENT_NAME_LEN 5 
+#define CLIENT_NAME_LEN 10 
 #define SERVER_PORT 6069
 static int worker_count = 0;
 
@@ -32,81 +34,109 @@ DWORD WINAPI worker_write(LPVOID param) {
 
         //check if we got data from client or EXIT signal
         //OR if we got a message from worker
-        while (q->currentSize == 0) {
-            if (WaitForSingleObject(msgSemaphore, INFINITE) == WAIT_OBJECT_0 + 1)
-                break;//The queue is full, wait for elements to be dequeued
-        }
+        WaitForSingleObject(msgSemaphore, INFINITE);
+        //The queue is full, wait for elements to be dequeued
         char* msg = new_node->msgBuffer;
-        iResult = send(acceptedSocket, msg, (int)strlen(msg), 0);
-        if (iResult == SOCKET_ERROR)
+        char messageBuff[266];
+        memset(messageBuff, 0, 266);
+        strcpy(messageBuff, msg + CLIENT_NAME_LEN);
+        strcpy(messageBuff + strlen(messageBuff), ":");
+        strcpy(messageBuff + strlen(messageBuff), new_node->msgBuffer);
+        iResult = send(acceptedSocket, messageBuff, strlen(messageBuff), 0);
+        if (iResult != SOCKET_ERROR)
         {
-            printf("send failed with error: %d\n", WSAGetLastError());
-            //closesocket(connectSocket);
-            //WSACleanup();
-            return 1;
-        }
-        else {
-            printf("Worker thread sent: %s.\n", msg);
+            printf("[WORKER WRITE]: sent: %s.\n", messageBuff);
             if (strcmp(msg, "exit") == 0) {
-                printf("Worker process signig off.\n");
+                printf("[WORKER WRITE]: Worker process signig off.\n");
                 break;
             }
-
         }
-        strcpy(msg, '\0');
-
+        else
+        {
+            if (WSAGetLastError() == WSAEWOULDBLOCK) { //the recieve would block, continue
+                continue;
+            }
+            else {
+                printf("[WORKER WRITE]: send failed with error: %d\n", WSAGetLastError());
+            }
+            strcpy(msg, "");
+        }
     }
+    return 0;
 
 }
 
 
 
 DWORD WINAPI worker_read(LPVOID param) {
-    SOCKET acceptedSocket = (SOCKET)param;
-    //u_long non_blocking = 1;
-    //ioctlsocket(acceptedSocket, FIONBIO, &non_blocking);
+    //SOCKET acceptedSocket = (SOCKET)param;
+    
+    node* new_node = (node*)param;
+    SOCKET acceptedSocket = new_node->acceptedSocket;
     char dataBuffer[BUFFER_SIZE];
     int worker_num = worker_count++;
     //check if we got data from client or EXIT signal
     //OR if we got a message from worker
     do
     {
-        // Receive data until the client shuts down the connection
+        
         int iResult = recv(acceptedSocket, dataBuffer, BUFFER_SIZE, 0);
-        if (iResult > 0)	// Check if message is successfully received
+        if (iResult != SOCKET_ERROR)	// Check if message is successfully received
         {
             dataBuffer[iResult] = '\0';
-            if (strcmp(dataBuffer, "exit") == 0) {
-                // Connection was closed successfully
-                printf("Connection with worker %d closed.\n", worker_num);
-                closesocket(acceptedSocket);
-                break;
+            printf("[WORKER READ] Worker sent: %s.\n", dataBuffer);
+
+            char clientName[CLIENT_NAME_LEN];
+            strcpy(clientName, strstr(dataBuffer, "Client"));
+            printf("%s\n", clientName);
+            char dataBuffer2[BUFFER_SIZE + CLIENT_NAME_LEN];
+            strcpy(dataBuffer2, dataBuffer);
+
+            client_thread* foundClient = lookup_client(clientName);
+
+            if (foundClient) {
+                iResult = send(foundClient->acceptedSocket, dataBuffer2, (int)strlen(dataBuffer2), 0);
+                memset(dataBuffer2, 0, BUFFER_SIZE);
+                memset(clientName, 0, sizeof(clientName));
+
+                if (iResult != SOCKET_ERROR)	// Check if message is successfully received
+                {
+                    printf("[WORKER]: returned to client: %s\n", dataBuffer);
+                    // we will kick out the node from the busy list
+                    delete_node(new_node, busy_workers_list);
+                    // and isert it to the end of the free worker list
+                    insert_last_node(new_node, free_workers_list);
+
+                    continue;
+                }
+                else {
+                    if (WSAGetLastError() == WSAEWOULDBLOCK) {
+                        continue;
+                    }
+                    else {
+                        printf("[WORKER]: send to client failed with error: %d\n", WSAGetLastError());
+                        break;
+                    }
+                }
             }
-            // Log message text
-            printf("Worker %d sent: %s.\n", worker_num, dataBuffer);
-        }
-        else if (iResult == 0)	// Check if shutdown command is received
-        {
-            printf("Connection with client closed.\n");
-            closesocket(acceptedSocket);
-            break;
+            // Send the message to the client...
+
+           
         }
         else	// There was an error during recv
         {
-            printf("recv failed with error: %d\n", WSAGetLastError());
-            closesocket(acceptedSocket);
-            break;
+            if (WSAGetLastError() == WSAEWOULDBLOCK) { //the recieve would block, continue
+                continue;
+            }
+            else {
+                printf("[WORKER READ]: recv failed with error: %d\n", WSAGetLastError());
+                break;
+            }
         }
-        //checking if client is receiving messages ---> sending notifications to client is task for Worker thread
-        /*iResult = send(acceptedSocket, "hello client!", (int)strlen("hello client!"), 0);
-        if (iResult == SOCKET_ERROR)
-        {
-            printf("send failed with error: %d\n", WSAGetLastError());
-            //closesocket(connectSocket);
-            WSACleanup();
-            return 1;
-        }*/
+        
     } while (true);
+
+    return 0;
 }
 DWORD WINAPI worker_listener(LPVOID param) {
     // Socket used for listening for new clients 
@@ -178,16 +208,17 @@ DWORD WINAPI worker_listener(LPVOID param) {
             WSACleanup();
             return 1;
         }
-        printf("\nNew Worker accepted. Worker address: %s : %d\n", inet_ntoa(clientAddr.sin_addr), ntohs(clientAddr.sin_port));
+        printf("\n[WORKER THREAD]: New Worker accepted. Worker address: %s : %d\n", inet_ntoa(clientAddr.sin_addr), ntohs(clientAddr.sin_port));
         //create a new thread for a new client connected
          //create thread za workere prima ceo element liste ne samo accepted socket!!!
         HANDLE hWorkerWrite, hWorkerRead;
         DWORD workerWID, workerRID;
-        HANDLE msgSemaphore = CreateSemaphore(0, 0, 1, NULL);
         node* new_node = (node*)malloc(sizeof(node));
-        new_node->msgSemaphore = msgSemaphore;
-        new_node->msgBuffer = (char*)malloc(sizeof(char) * 256);
+        new_node->msgSemaphore = CreateSemaphore(0, 0, 1, NULL);
+        new_node->msgBuffer = (char*)malloc(sizeof(char) * 266);
         new_node->acceptedSocket = acceptedSocket;
+        unsigned long non_blocking = 1;
+        ioctlsocket(acceptedSocket, FIONBIO, &non_blocking);
         HANDLE workerWrite = CreateThread(NULL, 0, &worker_write, (LPVOID)new_node, 0, &workerWID);
         HANDLE workerRead = CreateThread(NULL, 0, &worker_read, (LPVOID)new_node, 0, &workerRID);
         new_node->thread_read = workerRead;

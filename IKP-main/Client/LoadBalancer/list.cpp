@@ -19,13 +19,21 @@ void insert_first_node(node* new_node, list* l) {
 	
 
 
-	if (l->tail == NULL) {
+	if (l->tail == NULL && l->head == NULL) {
 		l->tail = new_node;
+		l->head = new_node;
+	}
+	else {
+		new_node->next = l->head;
+		l->head = new_node;
 	}
 
-	l->head = new_node;
+	
 	LeaveCriticalSection(&l->cs);
 }
+
+
+
 void insert_last_node(node* new_node, list* l) {
 	EnterCriticalSection(&l->cs);
 	
@@ -64,15 +72,26 @@ void delete_node(node* new_node, list* l) {
 		if (previous != NULL) {
 			previous->next = current->next;
 		}
-		// Free the memory used by the node
-		free(current);
+		
 	}
 	else {
-		printf("Node is not in list.");
+		printf("Node is not in list.\n");
 	}
 	LeaveCriticalSection(&l->cs);
 
 }
+
+void move_first_node(list* to, list* from) {
+	EnterCriticalSection(&from->cs);
+	node* first_node_from = from->head;
+	if (first_node_from != NULL) {
+		from->head = from->head->next;
+		insert_first_node(first_node_from, to);
+	}
+	LeaveCriticalSection(&from->cs);
+}
+
+
 void print_list(list* l) {
 	EnterCriticalSection(&l->cs);
 	printf("LIST: \n");
@@ -92,7 +111,47 @@ void print_list(list* l) {
 
 }
 
+node* delete_first_node(list* l) {
+	node* firstNode;
+	EnterCriticalSection(&l->cs);
+	if (l->head != NULL) {
+		firstNode = l->head;
+		l->head = l->head->next;
+		LeaveCriticalSection(&l->cs);
+		return firstNode;
+	}
+	else {
+		printf("List is empty, no element at the beginning!\n");
+		LeaveCriticalSection(&l->cs);
+		return NULL;
+	}
+}
 
+/*
+node* find_node(list* lst, SOCKET sock) {
+	node* current = lst->head;
+	while (current != NULL) {
+		if (current->acceptedSocket == sock) {
+			return current;
+		}
+		current = current->next;
+	}
+	return NULL;
+}*/
+node* find_previous_node(list* lst, node* target) {
+	node* current = NULL;
+	EnterCriticalSection(&lst->cs);
+	current = lst->head;
+	while (current != NULL) {
+		if (current->next == target) {
+			LeaveCriticalSection(&lst->cs);
+			return current;
+		}
+		current = current->next;
+	}
+	LeaveCriticalSection(&lst->cs);
+	return NULL;
+}
 
 
 
@@ -110,5 +169,21 @@ void delete_list(list* l) {
 	LeaveCriticalSection(&l->cs);
 	DeleteCriticalSection(&l->cs);
 }
+
+
+//void put_done_node_to_free(node* done_node, list* busyList, list* freeList) {
+//	node* tmp = busyList->head;
+//	while (tmp->next != NULL && tmp!=done_node) {
+//		tmp = tmp->next;
+//	}
+//	//we should have found the node
+//	if (tmp == NULL) {
+//		return;
+//	}
+//
+//	delete_node(done_node, busyList);
+//	insert_last_node()
+//
+//}
 
 

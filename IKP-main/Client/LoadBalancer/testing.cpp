@@ -43,9 +43,14 @@ void test_hashing() {
 }
 DWORD WINAPI producer(LPVOID param) {
     queue* q = (queue*)param;
-    char data_a[10] = "ABC";
+    char clientName[10] = "Client0";
+    char message[10] = "mess";
+    char toEnqueue[20];
+    memset(toEnqueue, 0, 20);
+    memcpy(toEnqueue, clientName, 10);
+    memcpy((toEnqueue + 10), message, strlen(message) + 1);
     while (true) {
-        enqueue(q, data_a);
+        enqueue(toEnqueue);
         Sleep(300);
     }
 }
@@ -54,11 +59,11 @@ DWORD WINAPI consumer(LPVOID param) {
     while (true) {
         char buffer[10];
         Sleep(500);
-        dequeue(q, buffer);
+        dequeue(buffer);
     }
 }
 void test_dynamic_enqueue_dequeue() {
-    queue* q = create_queue(7);
+    create_queue(7);
     HANDLE hProducer;
     HANDLE hConsumer;
     DWORD ProducerID;

@@ -22,8 +22,8 @@ typedef struct {
 	CRITICAL_SECTION cs;
 }list;
 
-list* free_workers_list;
-list* busy_workers_list;
+extern list* free_workers_list;
+extern list* busy_workers_list;
 
 
 
@@ -31,6 +31,11 @@ void init_list(list** l);
 void insert_first_node(node* new_node, list* l);
 void insert_last_node(node* new_node, list* l);
 void delete_node(node* new_node, list* l);
+node* delete_first_node(list* l);
+//node* find_node(SOCKET acceptedSocket, list* l);
+//void put_done_node_to_free(node* done_node, list* busyList, list* freeList);
+void move_first_node(list* to, list* from);
+node* find_previous_node(list* lst, node* target);
 void print_list(list* l);
 void delete_list(list* l);
 
