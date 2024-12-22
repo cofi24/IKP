@@ -51,6 +51,7 @@ DWORD WINAPI client_read_write(LPVOID param) {
                 // Connection was closed successfully
                 printf("Connection with client %d closed.\n", client_num);
                 closesocket(acceptedSocket);
+                //CloseHandle(client_read_write);
                 break;
             }
             // Log message text
@@ -74,12 +75,14 @@ DWORD WINAPI client_read_write(LPVOID param) {
         {
             printf("Connection with client closed.\n");
             closesocket(acceptedSocket);
+            //CloseHandle(client_read_write);
             break;
         }
         else	// There was an error during recv
         {
             printf("recv failed with error: %d\n", WSAGetLastError());
             closesocket(acceptedSocket);
+            //CloseHandle(client_read_write);
             break;
         }
         //checking if client is receiving messages ---> sending notifications to client is task for Worker thread
@@ -92,6 +95,7 @@ DWORD WINAPI client_read_write(LPVOID param) {
             return 1;
         }*/
     } while (true);
+    //CloseHandle(client_read_write);
 
     return 0;
 }
@@ -157,6 +161,8 @@ DWORD WINAPI client_listener(LPVOID param) {
 
     do
     {
+        if (WaitForSingleObject(semaphoreEnd, INFINITE) == WAIT_OBJECT_0 + 1)
+            break;
         // Struct for information about connected client
         sockaddr_in clientAddr;
         int clientAddrSize = sizeof(struct sockaddr_in);

@@ -11,7 +11,8 @@
 
 #define WORKER_IP_ADDRESS "127.0.0.1"
 #define WORKER_PORT 6069
-
+//#define DEBUG_LIST
+#define DEBUG_QUEUE
 
 #pragma warning(disable:4996)
 
@@ -31,6 +32,7 @@ void create_new_worker_process() {
     TCHAR buff[100];
     GetCurrentDirectory(100, buff);
     wcscat(buff, L"\\..\\Debug\\Worker.exe");
+    //wcscat(buff, L"\\..\\x64\\Debug\\Worker.exe");
     TCHAR cmd[] = L"Worker.exe";
     if (!CreateProcess(
         buff,          // LPCTSTR lpApplicationName
@@ -64,7 +66,7 @@ DWORD WINAPI checkPercentage(LPVOID param) {
                 //EnterCriticalSection(&globalCs);
                 strcpy(first_elem->msgStruct->bufferNoName, "exit");
                 ReleaseSemaphore(first_elem->msgSemaphore, 1, NULL);
-
+                /*
                 //wait for worker read and write to finish
                 if (first_elem->thread_read) {
                     //WaitForSingleObject(first_elem->thread_read, INFINITE);
@@ -75,12 +77,13 @@ DWORD WINAPI checkPercentage(LPVOID param) {
                     //WaitForSingleObject(first_elem->thread_write, INFINITE);
                     CloseHandle(first_elem->thread_write);
                 }
+                */
 
 
-
-                free(first_elem);
+                //free(first_elem);
 
                 worker_process_count--;
+                //LeaveCriticalSection(&globalCs);
 
             }
         }
@@ -98,22 +101,35 @@ DWORD WINAPI dispatcher(LPVOID param) {
     messageStruct* dequeuedMessageStruct = NULL;
 
     while (true) {
-        Sleep(3000);
+        Sleep(1000);
 
         if (!is_queue_empty()) {
-            node* first = free_workers_list->head;
             //EnterCriticalSection(&globalCs);
+
+            node* first = free_workers_list->head;
+            
             if (free_workers_list->head != NULL)
             {
+#ifdef DEBUG_LIST
+                printf("Free Worker ");
+                print_list(free_workers_list);
+#endif
+
                 dequeue(&dequeuedMessageStruct);
                 
-               
+                EnterCriticalSection(&free_workers_list->cs);
                 first->msgStruct = dequeuedMessageStruct;
 
                 ReleaseSemaphore(first->msgSemaphore, 1, NULL);
-              
+                LeaveCriticalSection(&free_workers_list->cs);
+
+
                 move_first_node(busy_workers_list, free_workers_list);
 
+#ifdef DEBUG_LIST
+                printf("Busy Worker ");
+                print_list(busy_workers_list);
+#endif
 
             }
             //LeaveCriticalSection(&globalCs);
@@ -143,14 +159,21 @@ int main() {
     create_queue(8);
     init_list(&free_workers_list);
     init_list(&busy_workers_list);
+    semaphoreEnd = CreateSemaphore(0, 0, 4, NULL);
+
+
+    //InitializeCriticalSection(&globalCs);
     hPercentage = CreateThread(NULL, 0, &checkPercentage, (LPVOID)0, 0, &percentageID);
     hListenerClient = CreateThread(NULL, 0, &client_listener, (LPVOID)0, 0, &listenerClientID);
     hListenerWorker = CreateThread(NULL, 0, &worker_listener, (LPVOID)0, 0, &listenerWorkerID);
     hDispatcher = CreateThread(NULL, 0, &dispatcher, (LPVOID)0, 0, &dispatcherID);
     
     create_new_worker_process();
-    worker_process_count++;
     
+    printf("Press any key to exit:\n");
+    char input[2];
+    gets_s(input, 2);
+
     //wait for listener to finish
     if (hListenerClient)
         WaitForSingleObject(hListenerClient, INFINITE);
@@ -165,5 +188,7 @@ int main() {
     delete_list(free_workers_list);
     delete_list(busy_workers_list);
     delete_queue();
+
+    //DeleteCriticalSection(&globalCs);
     return 0;
 }

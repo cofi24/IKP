@@ -6,3 +6,6 @@ typedef struct messageStruct {
 	char clientName[CLIENT_NAME_LEN];
 	char bufferNoName[BUFFER_WITHOUT_NAME];
 }messageStruct;
+
+
+HANDLE semaphoreEnd;

@@ -47,6 +47,7 @@ void insert_last_node(node* new_node, list* l) {
 		l->tail->next = new_node;
 		l->tail = new_node;
 	}
+	new_node->next = NULL;
 	LeaveCriticalSection(&l->cs);
 }
 
@@ -83,11 +84,24 @@ void delete_node(node* new_node, list* l) {
 
 void move_first_node(list* to, list* from) {
 	EnterCriticalSection(&from->cs);
+	EnterCriticalSection(&to->cs);
+
 	node* first_node_from = from->head;
 	if (first_node_from != NULL) {
 		from->head = from->head->next;
-		insert_first_node(first_node_from, to);
+		if (from->head == NULL)
+			from->tail = NULL;
+
+		if (to->tail == NULL && to->head == NULL) {
+			to->tail = first_node_from;
+			to->head = first_node_from;
+		}
+		else {
+			first_node_from->next = to->head;
+			to->head = first_node_from;
+		}
 	}
+	LeaveCriticalSection(&to->cs);
 	LeaveCriticalSection(&from->cs);
 }
 
@@ -100,9 +114,9 @@ void print_list(list* l) {
 		WCHAR* thread_name_READ = NULL;
 		WCHAR* thread_name_WRITE = NULL;
 		GetThreadDescription(current->thread_read, &thread_name_READ);
-		printf("[%ls]->", thread_name_READ);
+		printf("[%ls :", thread_name_READ);
 		GetThreadDescription(current->thread_write, &thread_name_WRITE);
-		printf("[%ls]->", thread_name_WRITE);
+		printf(" %ls]->", thread_name_WRITE);
 		
 		current = current->next;
 	}
@@ -125,6 +139,25 @@ node* delete_first_node(list* l) {
 		LeaveCriticalSection(&l->cs);
 		return NULL;
 	}
+}
+
+void move_specific_node(list* to, list* from, node* n) {
+	EnterCriticalSection(&from->cs);
+	EnterCriticalSection(&to->cs);
+	node* prev = NULL;
+	node* curr = from->head;
+	while (curr != NULL && curr != n) {
+		prev = curr;
+		curr = curr->next;
+	}
+	prev = curr->next;
+	if (to->head == NULL) {
+		to->head = curr;
+	}
+	to->tail = curr;
+	curr->next = NULL;
+	LeaveCriticalSection(&to->cs);
+	LeaveCriticalSection(&from->cs);
 }
 
 /*

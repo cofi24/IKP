@@ -39,12 +39,20 @@ DWORD WINAPI worker_write(LPVOID param) {
         messageStruct* msg = new_node->msgStruct;
         char messageBuff[BUFFER_SIZE + 1]; // 256+1 for :
 
-        char msgLen = strlen(msg->clientName) + strlen(msg->bufferNoName) + 1 + 1; // client+message+delimiter+messageLen
-       
-        
+        char msgLen;
+
         memset(messageBuff, 0, BUFFER_SIZE);// zero the buffer
         char message[BUFFER_SIZE + 1];
-        sprintf(message, "%s:%s", msg->clientName, msg->bufferNoName);
+
+        if (strcmp(msg->bufferNoName, "exit") == 0) {
+            sprintf(message, "%s", msg->bufferNoName);
+            msgLen = strlen("exit") + 1;
+        }
+        else {
+            sprintf(message, "%s:%s", msg->clientName, msg->bufferNoName);
+            msgLen = strlen(msg->clientName) + strlen(msg->bufferNoName) + 1 + 1; // client+message+delimiter+messageLen
+        }
+        
 
         memset(messageBuff, msgLen, 1); // first byte is the length of the message
 
@@ -55,7 +63,7 @@ DWORD WINAPI worker_write(LPVOID param) {
         if (iResult != SOCKET_ERROR)
         {
             printf("[WORKER WRITE]: sent: %s.\n", messageBuff);
-            if (strcmp(msg->bufferNoName, "exit") == 0) {
+            if (strcmp(messageBuff + 1, "exit") == 0) {
                 printf("[WORKER WRITE]: Worker process signig off.\n");
                 break;
             }
@@ -106,6 +114,16 @@ DWORD WINAPI worker_read(LPVOID param) {
             dataBuffer[iResult] = '\0';
             printf("[WORKER READ] Worker sent: %s.\n", dataBuffer);
 
+            if (strcmp(dataBuffer+1, "exit") == 0) {
+                printf("[WORKER READ] Worker sent exit. Worker proccess signing off.\n");
+                TerminateThread(new_node->thread_write, 0);
+                TerminateThread(GetCurrentThread(), 0);
+                delete_node(new_node, busy_workers_list);
+                free(new_node->msgStruct);
+                free(new_node);
+                //return 0;
+            }
+
             char clientName[CLIENT_NAME_LEN];
            
             memset(clientName, 0, CLIENT_NAME_LEN);
@@ -121,7 +139,7 @@ DWORD WINAPI worker_read(LPVOID param) {
 
             client_thread* foundClient = lookup_client(clientName);
 
-            if (foundClient) {
+            //if (foundClient) {
                 iResult = send(foundClient->acceptedSocket, bufferForClient, (int)strlen(bufferForClient), 0);
                 memset(bufferForClient, 0, BUFFER_SIZE);
                 memset(clientName, 0, sizeof(clientName));
@@ -129,6 +147,7 @@ DWORD WINAPI worker_read(LPVOID param) {
                 if (iResult != SOCKET_ERROR)	// Check if message is successfully received
                 {
                     printf("[WORKER]: returned to client: %s\n", dataBuffer);
+                    //move_specific_node(free_workers_list, busy_workers_list, new_node);
                     // we will kick out the node from the busy list
                     delete_node(new_node, busy_workers_list);
                     // and isert it to the end of the free worker list
@@ -145,7 +164,7 @@ DWORD WINAPI worker_read(LPVOID param) {
                         break;
                     }
                 }
-            }
+            //}
             // Send the message to the client...
 
            
@@ -157,6 +176,7 @@ DWORD WINAPI worker_read(LPVOID param) {
             }
             else {
                 printf("[WORKER READ]: recv failed with error: %d\n", WSAGetLastError());
+                //TerminateThread(GetCurrentThread(), 0);
                 break;
             }
         }
@@ -220,6 +240,8 @@ DWORD WINAPI worker_listener(LPVOID param) {
         return 1;
     }
     printf("Worker socket is set to listening mode. Waiting for new connection requests.\n");
+    static int worker_thread_cnt = 0;
+    
     do
     {
         // Struct for information about connected client
@@ -240,23 +262,30 @@ DWORD WINAPI worker_listener(LPVOID param) {
          //create thread za workere prima ceo element liste ne samo accepted socket!!!
         HANDLE hWorkerWrite, hWorkerRead;
         DWORD workerWID, workerRID;
-        node* new_node = (node*)malloc(sizeof(node));
         
-        new_node->msgSemaphore = CreateSemaphore(0, 0, 1, NULL);
-        new_node->msgStruct = (messageStruct*)malloc(sizeof(messageStruct));
-        new_node->acceptedSocket = acceptedSocket;
 
 
         unsigned long non_blocking = 1;
         ioctlsocket(acceptedSocket, FIONBIO, &non_blocking);
-        HANDLE workerWrite = CreateThread(NULL, 0, &worker_write, (LPVOID)new_node, 0, &workerWID);
-        HANDLE workerRead = CreateThread(NULL, 0, &worker_read, (LPVOID)new_node, 0, &workerRID);
-       
-        new_node->thread_read = workerRead;
-        new_node->thread_write = workerWrite;
+
+        node* new_node = (node*)malloc(sizeof(node));
+        new_node->msgSemaphore = CreateSemaphore(0, 0, 1, NULL);
+        new_node->msgStruct = (messageStruct*)malloc(sizeof(messageStruct));
+        new_node->acceptedSocket = acceptedSocket;
+        new_node->thread_write = CreateThread(NULL, 0, &worker_write, (LPVOID)new_node, 0, &workerWID);
+        new_node->thread_read = CreateThread(NULL, 0, &worker_read, (LPVOID)new_node, 0, &workerRID);
         new_node->next = NULL;
+       
+        TCHAR workerReadDescription[20];
+        TCHAR workerWriteDescription[20];
+        wsprintfW(workerReadDescription, L"WRR %d", worker_thread_cnt);
+        wsprintfW(workerWriteDescription, L"WRW %d", worker_thread_cnt);
+
+        SetThreadDescription(new_node->thread_read, workerReadDescription);
+        SetThreadDescription(new_node->thread_write, workerWriteDescription);
 
         insert_last_node(new_node, free_workers_list);
+        worker_thread_cnt++;
         //Put accepted socket/thread in the FREE LIST
     } while (true);
     // Shutdown the connection since we're done
