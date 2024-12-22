@@ -13,7 +13,7 @@
 #pragma comment (lib, "Ws2_32.lib")
 #pragma comment (lib, "Mswsock.lib")
 #pragma comment (lib, "AdvApi32.lib")
-
+#pragma warning(disable:4996)
 
 #define SERVER_IP_ADDRESS "127.0.0.1"
 #define SERVER_PORT 5059
@@ -28,7 +28,7 @@ DWORD WINAPI client_read(LPVOID param) {
 	char dataBuffer[BUFFER_SIZE];
 	do
 	{
-		int iResult = recv(connectedSocket, dataBuffer, (int)strlen(dataBuffer), 0);
+		int iResult = recv(connectedSocket, dataBuffer, BUFFER_SIZE, 0);
 		if (iResult != SOCKET_ERROR) {
 			if (iResult > 0) {
 				dataBuffer[iResult] = '\0';
@@ -111,6 +111,8 @@ int main()
 		printf("Message to send");
 		gets_s(dataBuffer, BUFFER_SIZE);
 
+
+		
 		// Send message to server using connected socket
 		iResult = send(connectSocket, dataBuffer, (int)strlen(dataBuffer), 0);
 		

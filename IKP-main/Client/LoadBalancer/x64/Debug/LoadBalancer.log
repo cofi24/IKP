@@ -1,13 +1,32 @@
-﻿  hash_map.cpp
-C:\Users\10\Desktop\gitfolder\IKP\IKP-main\Client\LoadBalancer\hash_map.cpp(10,13): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-  testing.cpp
+﻿  ClientCommunication.cpp
   WorkerCommunication.cpp
-C:\Users\10\Desktop\gitfolder\IKP\IKP-main\Client\LoadBalancer\WorkerCommunication.cpp(19,1): warning C4005: 'CLIENT_NAME_LEN': macro redefinition
-C:\Users\10\Desktop\gitfolder\IKP\IKP-main\Client\LoadBalancer\hash_map.h(3,1): message : see previous definition of 'CLIENT_NAME_LEN'
-C:\Users\10\Desktop\gitfolder\IKP\IKP-main\Client\LoadBalancer\WorkerCommunication.cpp(45,59): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\10\Desktop\gitfolder\IKP\IKP-main\Client\LoadBalancer\WorkerCommunication.cpp(150,10): warning C4101: 'clientName': unreferenced local variable
-C:\Users\10\Desktop\gitfolder\IKP\IKP-main\Client\LoadBalancer\WorkerCommunication.cpp(149,10): warning C4101: 'dataBuffer': unreferenced local variable
-C:\Users\10\Desktop\gitfolder\IKP\IKP-main\Client\LoadBalancer\WorkerCommunication.cpp(214,30): warning C4101: 'hWorkerRead': unreferenced local variable
-C:\Users\10\Desktop\gitfolder\IKP\IKP-main\Client\LoadBalancer\WorkerCommunication.cpp(214,16): warning C4101: 'hWorkerWrite': unreferenced local variable
+C:\Users\cofi24\Desktop\Git uploads\IKP\IKP-main\Client\LoadBalancer\ClientCommunication.cpp(19,9): warning C4005: 'BUFFER_SIZE': macro redefinition
+      C:\Users\cofi24\Desktop\Git uploads\IKP\IKP-main\Client\LoadBalancer\basic_types.h(4,9):
+      see previous definition of 'BUFFER_SIZE'
+  
+C:\Users\cofi24\Desktop\Git uploads\IKP\IKP-main\Client\LoadBalancer\ClientCommunication.cpp(109,10): warning C4101: 'dataBuffer': unreferenced local variable
+C:\Users\cofi24\Desktop\Git uploads\IKP\IKP-main\Client\LoadBalancer\WorkerCommunication.cpp(18,9): warning C4005: 'BUFFER_SIZE': macro redefinition
+      C:\Users\cofi24\Desktop\Git uploads\IKP\IKP-main\Client\LoadBalancer\basic_types.h(4,9):
+      see previous definition of 'BUFFER_SIZE'
+  
+C:\Users\cofi24\Desktop\Git uploads\IKP\IKP-main\Client\LoadBalancer\WorkerCommunication.cpp(42,21): warning C4267: 'initializing': conversion from 'size_t' to 'char', possible loss of data
+C:\Users\cofi24\Desktop\Git uploads\IKP\IKP-main\Client\LoadBalancer\WorkerCommunication.cpp(53,74): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\cofi24\Desktop\Git uploads\IKP\IKP-main\Client\LoadBalancer\WorkerCommunication.cpp(113,17): warning C4101: 'a': unreferenced local variable
+C:\Users\cofi24\Desktop\Git uploads\IKP\IKP-main\Client\LoadBalancer\WorkerCommunication.cpp(177,10): warning C4101: 'clientName': unreferenced local variable
+C:\Users\cofi24\Desktop\Git uploads\IKP\IKP-main\Client\LoadBalancer\WorkerCommunication.cpp(176,10): warning C4101: 'dataBuffer': unreferenced local variable
+C:\Users\cofi24\Desktop\Git uploads\IKP\IKP-main\Client\LoadBalancer\WorkerCommunication.cpp(241,30): warning C4101: 'hWorkerRead': unreferenced local variable
+C:\Users\cofi24\Desktop\Git uploads\IKP\IKP-main\Client\LoadBalancer\WorkerCommunication.cpp(241,16): warning C4101: 'hWorkerWrite': unreferenced local variable
+  hash_map.cpp
+C:\Users\cofi24\Desktop\Git uploads\IKP\IKP-main\Client\LoadBalancer\hash_map.cpp(12,13): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+  list.cpp
+  main.cpp
+C:\Users\cofi24\Desktop\Git uploads\IKP\IKP-main\Client\LoadBalancer\main.cpp(58,26): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+  queue.cpp
+C:\Users\cofi24\Desktop\Git uploads\IKP\IKP-main\Client\LoadBalancer\queue.cpp(13,9): warning C4005: 'BUFFER_SIZE': macro redefinition
+      C:\Users\cofi24\Desktop\Git uploads\IKP\IKP-main\Client\LoadBalancer\basic_types.h(4,9):
+      see previous definition of 'BUFFER_SIZE'
+  
+C:\Users\cofi24\Desktop\Git uploads\IKP\IKP-main\Client\LoadBalancer\queue.cpp(60,6): warning C4551: function call missing argument list
+  testing.cpp
   Generating Code...
-  LoadBalancer.vcxproj -> C:\Users\10\Desktop\gitfolder\IKP\IKP-main\Client\x64\Debug\LoadBalancer.exe
+  LoadBalancer.vcxproj -> C:\Users\cofi24\Desktop\Git uploads\IKP\IKP-main\Client\x64\Debug\LoadBalancer.exe

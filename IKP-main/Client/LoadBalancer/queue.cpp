@@ -1,9 +1,10 @@
 #include "queue.h"
 
+
 #define  _CRT_SECURE_NO_WARNINGS
 #pragma warning(disable:4996)
 
-#include "hash_map.h"
+
 
 HANDLE hSemaporeQueueEmpty;
 HANDLE hSemaporeQueueFull;
@@ -20,7 +21,7 @@ void create_queue(int capacity) {
 	newQueue->currentSize = 0;
 
 	//create array of messages
-	newQueue->messageArray = (char**)malloc(sizeof(char*) * capacity);
+	newQueue->messageArray = (messageStruct**)malloc(sizeof(messageStruct*) * capacity);
 
 	for (int i = 0; i < capacity; i++) {
 		newQueue->messageArray[i] = NULL;
@@ -51,7 +52,7 @@ int get_capacity_queue() {
 	return q->capacity;
 }
 
-void enqueue(char* message) {
+void enqueue(messageStruct* messageArray) {
 	/*while (is_queue_full()) {
 		if (WaitForSingleObject(hSemaporeQueueEmpty, INFINITE) == WAIT_OBJECT_0 + 1)
 			break;
@@ -63,13 +64,13 @@ void enqueue(char* message) {
 	{
 		EnterCriticalSection(&q->cs);
 
-		int message_size = CLIENT_NAME_LEN + strlen(message + CLIENT_NAME_LEN) + 1;
+		
 		//The front and rear will go around like in a circular buffer
 		q->rear = (q->rear + 1) % q->capacity;
-		q->messageArray[q->rear] = (char*)malloc(message_size);
+		q->messageArray[q->rear] = messageArray;
 
 		//Write at that place the new message
-		memcpy(q->messageArray[q->rear], message, message_size);
+		
 		q->currentSize++;
 		#ifdef DEBUG
 		print_queue();
@@ -80,10 +81,10 @@ void enqueue(char* message) {
 
 }
 
-void dequeue(char* message) {
+void dequeue(messageStruct** messageArray) {
 	//while (q->currentSize == 0) {
-		//if (WaitForSingleObject(hSemaporeQueueFull, INFINITE) == WAIT_OBJECT_0 + 1)
-			//break;//The queue is full, wait for elements to be dequeued
+	//	if (WaitForSingleObject(hSemaporeQueueFull, INFINITE) == WAIT_OBJECT_0 + 1)
+	//		break;//The queue is full, wait for elements to be dequeued
 	//}
 
 	if (q->currentSize == 0) {
@@ -92,21 +93,20 @@ void dequeue(char* message) {
 
 	{
 		EnterCriticalSection(&q->cs);
-		q->messageArray[q->front] = NULL;
-		int message_size = CLIENT_NAME_LEN + strlen(q->messageArray[q->front] + CLIENT_NAME_LEN) + 1;
-		
-		memcpy(message, q->messageArray[q->front], message_size);
 
-		free(q->messageArray[q->front]);
+
+		*messageArray = q->messageArray[q->front];
+
+		q->messageArray[q->front] = NULL;
 		q->front = (q->front + 1) % q->capacity;
 		q->currentSize--;
 		if (q->currentSize == 0) {
 			q->front = 0;
 			q->rear = q->capacity - 1;
 		}
-		#ifdef DEBUG
+#ifdef DEBUG
 		print_queue();
-		#endif
+#endif
 		ReleaseSemaphore(hSemaporeQueueEmpty, 1, NULL); // increase the number of empty
 		LeaveCriticalSection(&q->cs);
 	}
@@ -126,19 +126,13 @@ void delete_queue() {
 
 void print_queue() {
 	printf("\n QUEUE: ");
-
 	for (int i = q->front; q->messageArray[i] != NULL;) {
 		if (i == q->capacity)
 			i = i % q->capacity;
-		char clientName[CLIENT_NAME_LEN];
-		char message[BUFFER_SIZE];
-		memcpy(clientName, q->messageArray[i], CLIENT_NAME_LEN);
-		printf(" %s->%s", clientName, (q->messageArray[i] + CLIENT_NAME_LEN));
+
+		printf(" %s->%s", q->messageArray[i]->clientName, q->messageArray[i]->bufferNoName);
 		if (i == q->rear)break;
 		++i;
 	}
-	
-
-
 	printf("\n");
 }

@@ -46,10 +46,11 @@ void create_new_worker_process() {
     )) {
         printf("CreateProcess failed (%d).\n", GetLastError());
     }
+    worker_process_count++;
     ShowWindow(0, SW_SHOW);
 }
 
-
+CRITICAL_SECTION globalCs;
 
 DWORD WINAPI checkPercentage(LPVOID param) {
     while (true) {
@@ -58,43 +59,64 @@ DWORD WINAPI checkPercentage(LPVOID param) {
         printf("Queue is at %d%%\n", fullfillness);
         if (fullfillness < 30 && worker_process_count>1) {
             node* first_elem = delete_first_node(free_workers_list);
-            //wait for worker read and write to finish
-            if (first_elem->thread_read)
-                WaitForSingleObject(first_elem->thread_read, INFINITE);
-            if (first_elem->thread_write)
-                WaitForSingleObject(first_elem->thread_write, INFINITE);
-            // we should close the appropriate WORKER PROCESS..
-            free(first_elem);
-            worker_process_count--;
+
+            if (first_elem != NULL && worker_process_count>1) {
+                //EnterCriticalSection(&globalCs);
+                strcpy(first_elem->msgStruct->bufferNoName, "exit");
+                ReleaseSemaphore(first_elem->msgSemaphore, 1, NULL);
+
+                //wait for worker read and write to finish
+                if (first_elem->thread_read) {
+                    //WaitForSingleObject(first_elem->thread_read, INFINITE);
+                    CloseHandle(first_elem->thread_read);
+                }
+
+                if (first_elem->thread_write) {
+                    //WaitForSingleObject(first_elem->thread_write, INFINITE);
+                    CloseHandle(first_elem->thread_write);
+                }
+
+
+
+                free(first_elem);
+
+                worker_process_count--;
+
+            }
         }
         else if (fullfillness > 70) {
            
              // open new worker processes
             //CreateProcess();
             create_new_worker_process();
+            
         }
     }
 }
 
 DWORD WINAPI dispatcher(LPVOID param) {
-    char message[266];
+    messageStruct* dequeuedMessageStruct = NULL;
 
     while (true) {
         Sleep(3000);
 
         if (!is_queue_empty()) {
             node* first = free_workers_list->head;
-
+            //EnterCriticalSection(&globalCs);
             if (free_workers_list->head != NULL)
             {
-                dequeue(message);
-                memcpy(first->msgBuffer, message, CLIENT_NAME_LEN + 256);
-                ReleaseSemaphore(first->msgSemaphore, 1, NULL);
+                dequeue(&dequeuedMessageStruct);
+                
+               
+                first->msgStruct = dequeuedMessageStruct;
 
+                ReleaseSemaphore(first->msgSemaphore, 1, NULL);
+              
                 move_first_node(busy_workers_list, free_workers_list);
 
 
             }
+            //LeaveCriticalSection(&globalCs);
         }
     }
     return 0;
@@ -126,7 +148,7 @@ int main() {
     hListenerWorker = CreateThread(NULL, 0, &worker_listener, (LPVOID)0, 0, &listenerWorkerID);
     hDispatcher = CreateThread(NULL, 0, &dispatcher, (LPVOID)0, 0, &dispatcherID);
     
-    //create_new_worker_process();
+    create_new_worker_process();
     worker_process_count++;
     
     //wait for listener to finish

@@ -41,6 +41,7 @@ void test_hashing() {
     strcpy(str, "GDASG");
     printf("ABC14 => %d\n", hash(str));
 }
+/*
 DWORD WINAPI producer(LPVOID param) {
     queue* q = (queue*)param;
     char clientName[10] = "Client0";
@@ -74,7 +75,7 @@ void test_dynamic_enqueue_dequeue() {
         WaitForSingleObject(hConsumer, INFINITE);
     if (hProducer)
         WaitForSingleObject(hProducer, INFINITE);
-}
+}*/
 DWORD WINAPI test(LPVOID param) {
     //printf("created thread for lists");
     return 0;

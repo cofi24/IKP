@@ -36,17 +36,26 @@ DWORD WINAPI worker_write(LPVOID param) {
         //OR if we got a message from worker
         WaitForSingleObject(msgSemaphore, INFINITE);
         //The queue is full, wait for elements to be dequeued
-        char* msg = new_node->msgBuffer;
-        char messageBuff[266];
-        memset(messageBuff, 0, 266);
-        strcpy(messageBuff, msg + CLIENT_NAME_LEN);
-        strcpy(messageBuff + strlen(messageBuff), ":");
-        strcpy(messageBuff + strlen(messageBuff), new_node->msgBuffer);
-        iResult = send(acceptedSocket, messageBuff, strlen(messageBuff), 0);
+        messageStruct* msg = new_node->msgStruct;
+        char messageBuff[BUFFER_SIZE + 1]; // 256+1 for :
+
+        char msgLen = strlen(msg->clientName) + strlen(msg->bufferNoName) + 1 + 1; // client+message+delimiter+messageLen
+       
+        
+        memset(messageBuff, 0, BUFFER_SIZE);// zero the buffer
+        char message[BUFFER_SIZE + 1];
+        sprintf(message, "%s:%s", msg->clientName, msg->bufferNoName);
+
+        memset(messageBuff, msgLen, 1); // first byte is the length of the message
+
+        strcpy(messageBuff + 1, message);
+          
+        iResult = send(acceptedSocket, messageBuff, strlen(messageBuff+1)+1, 0);
+        
         if (iResult != SOCKET_ERROR)
         {
             printf("[WORKER WRITE]: sent: %s.\n", messageBuff);
-            if (strcmp(msg, "exit") == 0) {
+            if (strcmp(msg->bufferNoName, "exit") == 0) {
                 printf("[WORKER WRITE]: Worker process signig off.\n");
                 break;
             }
@@ -59,8 +68,9 @@ DWORD WINAPI worker_write(LPVOID param) {
             else {
                 printf("[WORKER WRITE]: send failed with error: %d\n", WSAGetLastError());
             }
-            strcpy(msg, "");
+            
         }
+        
     }
     return 0;
 
@@ -73,7 +83,7 @@ DWORD WINAPI worker_read(LPVOID param) {
     
     node* new_node = (node*)param;
     SOCKET acceptedSocket = new_node->acceptedSocket;
-    char dataBuffer[BUFFER_SIZE];
+    char dataBuffer[BUFFER_SIZE+9+1];
     int worker_num = worker_count++;
     //check if we got data from client or EXIT signal
     //OR if we got a message from worker
@@ -81,22 +91,39 @@ DWORD WINAPI worker_read(LPVOID param) {
     {
         
         int iResult = recv(acceptedSocket, dataBuffer, BUFFER_SIZE, 0);
+        int msgLen = (int)dataBuffer[0];
         if (iResult != SOCKET_ERROR)	// Check if message is successfully received
         {
+
+            int iResult2 = 0;
+            char messagePart[BUFFER_SIZE];//delimiter + success
+            while (iResult != msgLen) {
+                iResult2 = recv(acceptedSocket, messagePart, BUFFER_SIZE, 0);
+                //strcpy(dataBuffer + iResult, dataBuffer2);
+                memcpy(dataBuffer + strlen(dataBuffer + 1) + 1, messagePart, (int)strlen(messagePart));
+                iResult += iResult2;
+            }
             dataBuffer[iResult] = '\0';
             printf("[WORKER READ] Worker sent: %s.\n", dataBuffer);
 
             char clientName[CLIENT_NAME_LEN];
-            strcpy(clientName, strstr(dataBuffer, "Client"));
+           
+            memset(clientName, 0, CLIENT_NAME_LEN);
+            //strcpy(clientName, strstr(dataBuffer, "Client"));
+            int a;
+            sscanf(dataBuffer + 1, "Success->%[^:]:", clientName);
+
+
             printf("%s\n", clientName);
-            char dataBuffer2[BUFFER_SIZE + CLIENT_NAME_LEN];
-            strcpy(dataBuffer2, dataBuffer);
+            char bufferForClient[BUFFER_SIZE + CLIENT_NAME_LEN];
+            //if(strcmp(dataBuffer, "exit") == 0)
+            strcpy(bufferForClient, dataBuffer);
 
             client_thread* foundClient = lookup_client(clientName);
 
             if (foundClient) {
-                iResult = send(foundClient->acceptedSocket, dataBuffer2, (int)strlen(dataBuffer2), 0);
-                memset(dataBuffer2, 0, BUFFER_SIZE);
+                iResult = send(foundClient->acceptedSocket, bufferForClient, (int)strlen(bufferForClient), 0);
+                memset(bufferForClient, 0, BUFFER_SIZE);
                 memset(clientName, 0, sizeof(clientName));
 
                 if (iResult != SOCKET_ERROR)	// Check if message is successfully received
@@ -214,13 +241,17 @@ DWORD WINAPI worker_listener(LPVOID param) {
         HANDLE hWorkerWrite, hWorkerRead;
         DWORD workerWID, workerRID;
         node* new_node = (node*)malloc(sizeof(node));
+        
         new_node->msgSemaphore = CreateSemaphore(0, 0, 1, NULL);
-        new_node->msgBuffer = (char*)malloc(sizeof(char) * 266);
+        new_node->msgStruct = (messageStruct*)malloc(sizeof(messageStruct));
         new_node->acceptedSocket = acceptedSocket;
+
+
         unsigned long non_blocking = 1;
         ioctlsocket(acceptedSocket, FIONBIO, &non_blocking);
         HANDLE workerWrite = CreateThread(NULL, 0, &worker_write, (LPVOID)new_node, 0, &workerWID);
         HANDLE workerRead = CreateThread(NULL, 0, &worker_read, (LPVOID)new_node, 0, &workerRID);
+       
         new_node->thread_read = workerRead;
         new_node->thread_write = workerWrite;
         new_node->next = NULL;
