@@ -32,8 +32,8 @@ void create_new_worker_process() {
     memset(&process_info, 0, sizeof(PROCESS_INFORMATION));
     TCHAR buff[100];
     GetCurrentDirectory(100, buff);
-    wcscat(buff, L"\\..\\Debug\\Worker.exe");
-    //wcscat(buff, L"\\..\\x64\\Debug\\Worker.exe");
+    //wcscat(buff, L"\\..\\Debug\\Worker.exe");
+    wcscat(buff, L"\\..\\x64\\Debug\\Worker.exe");
     TCHAR cmd[] = L"Worker.exe";
     if (!CreateProcess(
         buff,          // LPCTSTR lpApplicationName
@@ -58,13 +58,17 @@ CRITICAL_SECTION globalCs;
 void shut_down_first_free_process() {
     node* first_elem = delete_first_node(free_workers_list);
     if (first_elem != NULL) {
+        if (first_elem->msgStruct == NULL)
+            first_elem->msgStruct = (messageStruct*)malloc(sizeof(messageStruct));
+
         strcpy(first_elem->msgStruct->bufferNoName, "exit");
         ReleaseSemaphore(first_elem->msgSemaphore, 1, NULL);
         if (first_elem->thread_read)
             WaitForSingleObject(first_elem->thread_read, INFINITE);
         if (first_elem->thread_write)
             WaitForSingleObject(first_elem->thread_write, INFINITE);
-        free(first_elem);
+        //free(first_elem->msgStruct);
+        //free(first_elem);
         worker_process_count--;
     }
 }
@@ -74,7 +78,7 @@ DWORD WINAPI checkPercentage(LPVOID param) {
     while (true) {
         if (WaitForSingleObject(semaphoreEnd, 10) == WAIT_OBJECT_0)
             break;
-        Sleep(3000);
+        Sleep(1000);
         int fullfillness = ((float)get_current_size_queue() / (float)get_capacity_queue()) * 100;
         printf("Queue is at %d%%\n", fullfillness);
         if (fullfillness < 30 && worker_process_count>1) {
@@ -97,7 +101,7 @@ DWORD WINAPI dispatcher(LPVOID param) {
     while (true) {
         if (WaitForSingleObject(semaphoreEnd, 10) == WAIT_OBJECT_0)
             break;
-        Sleep(1000);
+        Sleep(500);
 
         if (!is_queue_empty()) {
             //EnterCriticalSection(&globalCs);
@@ -153,7 +157,7 @@ int main() {
     DWORD listenerWorkerID;
     DWORD dispatcherID;
     init_hash_table();
-    create_queue(8);
+    create_queue(20);
     init_list(&free_workers_list);
     init_list(&busy_workers_list);
     semaphoreEnd = CreateSemaphore(0, 0, 4, NULL);
@@ -171,10 +175,11 @@ int main() {
     char input[2];
     gets_s(input, 2);
 
-    ReleaseSemaphore(semaphoreEnd, 4, NULL);
+  
 
     shut_down_first_free_process();
-
+    
+    ReleaseSemaphore(semaphoreEnd, 4, NULL);
     //wait for listener to finish
     if (hPercentage)
         WaitForSingleObject(hPercentage, INFINITE);

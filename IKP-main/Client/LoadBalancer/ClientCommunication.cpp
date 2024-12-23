@@ -46,7 +46,7 @@ DWORD WINAPI client_read_write(LPVOID param) {
         int iResult = recv(acceptedSocket, dataBuffer, BUFFER_SIZE, 0);
         if (iResult != SOCKET_ERROR)
         {
-            if (iResult > 0)	// Check if message is successfully received
+            if (iResult >0)	// Check if message is successfully received
             {
                 dataBuffer[iResult] = '\0';
                 if (strcmp(dataBuffer, "exit") == 0) {
@@ -62,7 +62,6 @@ DWORD WINAPI client_read_write(LPVOID param) {
                 messageStruct* newMessageStruct = (messageStruct*)malloc(sizeof(messageStruct));
                 strcpy(newMessageStruct->clientName, clientName);
                 strcpy(newMessageStruct->bufferNoName, dataBuffer);
-
 
                 /*
                 memset(toEnqueue, 0, sizeof(toEnqueue));

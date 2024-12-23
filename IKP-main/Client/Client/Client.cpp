@@ -105,12 +105,16 @@ int main()
 	HANDLE hClientListener;
 	DWORD clientID;
 	hClientListener = CreateThread(NULL, 0, &client_read, (LPVOID)connectSocket, 0, &clientID);
-	while (true) {
+
+	int msgCnt = 0;
+	while (msgCnt<=50) {
 
 
-		printf("Message to send");
-		gets_s(dataBuffer, BUFFER_SIZE);
-
+		//printf("Message to send");
+		//gets_s(dataBuffer, BUFFER_SIZE);
+		
+		Sleep(300);
+		sprintf(dataBuffer, "Hello LB!!!");
 
 		
 		// Send message to server using connected socket
@@ -119,6 +123,7 @@ int main()
 		if (strcmp(dataBuffer, "exit") == 0)
 			break;
 
+		msgCnt++;
 		// Check result of send function
 		if (iResult == SOCKET_ERROR)
 		{
@@ -132,8 +137,13 @@ int main()
 
 
 	}
-
+	Sleep(20000);
+	sprintf(dataBuffer, "exit");
+	// Send message to server using connected socket
+	iResult = send(connectSocket, dataBuffer, (int)strlen(dataBuffer), 0);
 	
+	printf("\nPress any key to exit: ");
+	_getch();
 
 
 
@@ -148,10 +158,6 @@ int main()
 		WSACleanup();
 		return 1;
 	}
-
-
-	printf("\nPress any key to exit: ");
-	_getch();
 
 
 
