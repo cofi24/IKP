@@ -1,4 +1,7 @@
 #pragma once
+
+#include <winsock.h>
+#include <windows.h>
 #define CLIENT_NAME_LEN 10
 #define BUFFER_WITHOUT_NAME 246
 #define BUFFER_SIZE CLIENT_NAME_LEN+BUFFER_WITHOUT_NAME
@@ -8,4 +11,5 @@ typedef struct messageStruct {
 }messageStruct;
 
 
-HANDLE semaphoreEnd;
+extern HANDLE semaphoreEnd;
+bool is_socket_ready(SOCKET socket, bool isRead);

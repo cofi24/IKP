@@ -129,6 +129,8 @@ node* delete_first_node(list* l) {
 	node* firstNode;
 	EnterCriticalSection(&l->cs);
 	if (l->head != NULL) {
+		if (l->head == l->tail)
+			l->tail = NULL;
 		firstNode = l->head;
 		l->head = l->head->next;
 		LeaveCriticalSection(&l->cs);
@@ -201,6 +203,7 @@ void delete_list(list* l) {
 	l->tail = NULL;
 	LeaveCriticalSection(&l->cs);
 	DeleteCriticalSection(&l->cs);
+	free(l);
 }
 
 

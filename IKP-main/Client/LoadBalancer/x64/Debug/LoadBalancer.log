@@ -1,7 +1,28 @@
-﻿hash_map.obj : error LNK2005: "void * semaphoreEnd" (?semaphoreEnd@@3PEAXEA) already defined in ClientCommunication.obj
-list.obj : error LNK2005: "void * semaphoreEnd" (?semaphoreEnd@@3PEAXEA) already defined in ClientCommunication.obj
-main.obj : error LNK2005: "void * semaphoreEnd" (?semaphoreEnd@@3PEAXEA) already defined in ClientCommunication.obj
-queue.obj : error LNK2005: "void * semaphoreEnd" (?semaphoreEnd@@3PEAXEA) already defined in ClientCommunication.obj
-testing.obj : error LNK2005: "void * semaphoreEnd" (?semaphoreEnd@@3PEAXEA) already defined in ClientCommunication.obj
-WorkerCommunication.obj : error LNK2005: "void * semaphoreEnd" (?semaphoreEnd@@3PEAXEA) already defined in ClientCommunication.obj
-C:\Users\10\Desktop\gitfolder\IKP\IKP-main\Client\x64\Debug\LoadBalancer.exe : fatal error LNK1169: one or more multiply defined symbols found
+﻿  basic_types.cpp
+  ClientCommunication.cpp
+C:\Users\10\Desktop\gitfolder\IKP\IKP-main\Client\LoadBalancer\ClientCommunication.cpp(19,1): warning C4005: 'BUFFER_SIZE': macro redefinition
+C:\Users\10\Desktop\gitfolder\IKP\IKP-main\Client\LoadBalancer\basic_types.h(7,1): message : see previous definition of 'BUFFER_SIZE'
+C:\Users\10\Desktop\gitfolder\IKP\IKP-main\Client\LoadBalancer\ClientCommunication.cpp(119,10): warning C4101: 'dataBuffer': unreferenced local variable
+  hash_map.cpp
+C:\Users\10\Desktop\gitfolder\IKP\IKP-main\Client\LoadBalancer\hash_map.cpp(12,13): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+  list.cpp
+  main.cpp
+C:\Users\10\Desktop\gitfolder\IKP\IKP-main\Client\LoadBalancer\main.cpp(78,26): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+  queue.cpp
+C:\Users\10\Desktop\gitfolder\IKP\IKP-main\Client\LoadBalancer\queue.cpp(13,1): warning C4005: 'BUFFER_SIZE': macro redefinition
+C:\Users\10\Desktop\gitfolder\IKP\IKP-main\Client\LoadBalancer\basic_types.h(7,1): message : see previous definition of 'BUFFER_SIZE'
+C:\Users\10\Desktop\gitfolder\IKP\IKP-main\Client\LoadBalancer\queue.cpp(60,6): warning C4551: function call missing argument list
+  testing.cpp
+  WorkerCommunication.cpp
+C:\Users\10\Desktop\gitfolder\IKP\IKP-main\Client\LoadBalancer\WorkerCommunication.cpp(18,1): warning C4005: 'BUFFER_SIZE': macro redefinition
+C:\Users\10\Desktop\gitfolder\IKP\IKP-main\Client\LoadBalancer\basic_types.h(7,1): message : see previous definition of 'BUFFER_SIZE'
+C:\Users\10\Desktop\gitfolder\IKP\IKP-main\Client\LoadBalancer\WorkerCommunication.cpp(49,37): warning C4267: '=': conversion from 'size_t' to 'char', possible loss of data
+C:\Users\10\Desktop\gitfolder\IKP\IKP-main\Client\LoadBalancer\WorkerCommunication.cpp(53,78): warning C4267: '=': conversion from 'size_t' to 'char', possible loss of data
+C:\Users\10\Desktop\gitfolder\IKP\IKP-main\Client\LoadBalancer\WorkerCommunication.cpp(61,74): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\10\Desktop\gitfolder\IKP\IKP-main\Client\LoadBalancer\WorkerCommunication.cpp(132,17): warning C4101: 'a': unreferenced local variable
+C:\Users\10\Desktop\gitfolder\IKP\IKP-main\Client\LoadBalancer\WorkerCommunication.cpp(198,10): warning C4101: 'clientName': unreferenced local variable
+C:\Users\10\Desktop\gitfolder\IKP\IKP-main\Client\LoadBalancer\WorkerCommunication.cpp(197,10): warning C4101: 'dataBuffer': unreferenced local variable
+C:\Users\10\Desktop\gitfolder\IKP\IKP-main\Client\LoadBalancer\WorkerCommunication.cpp(266,34): warning C4101: 'hWorkerRead': unreferenced local variable
+C:\Users\10\Desktop\gitfolder\IKP\IKP-main\Client\LoadBalancer\WorkerCommunication.cpp(266,20): warning C4101: 'hWorkerWrite': unreferenced local variable
+  Generating Code...
+  LoadBalancer.vcxproj -> C:\Users\10\Desktop\gitfolder\IKP\IKP-main\Client\x64\Debug\LoadBalancer.exe

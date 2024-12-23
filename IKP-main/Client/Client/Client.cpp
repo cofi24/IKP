@@ -56,6 +56,7 @@ DWORD WINAPI client_read(LPVOID param) {
 
 
 
+
 int main()
 {
 
@@ -104,7 +105,6 @@ int main()
 	HANDLE hClientListener;
 	DWORD clientID;
 	hClientListener = CreateThread(NULL, 0, &client_read, (LPVOID)connectSocket, 0, &clientID);
-
 	while (true) {
 
 
