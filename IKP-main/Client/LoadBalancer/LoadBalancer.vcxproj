@@ -135,6 +135,7 @@
     <ClCompile Include="queue.cpp" />
     <ClCompile Include="testing.cpp" />
     <ClCompile Include="WorkerCommunication.cpp" />
+    <ClCompile Include="worker_list.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="basic_types.h" />
@@ -144,6 +145,7 @@
     <ClInclude Include="queue.h" />
     <ClInclude Include="testing.h" />
     <ClInclude Include="WorkerCommunication.h" />
+    <ClInclude Include="worker_list.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -51,12 +51,15 @@ DWORD WINAPI worker_write(LPVOID param) {
         memset(messageBuff, msgLen, 1); // first byte is the length of the message
 
         strcpy(messageBuff + 1, message);
+
+        while (!is_socket_ready(acceptedSocket, false)) {
+        }
           
         iResult = send(acceptedSocket, messageBuff, strlen(messageBuff+1)+1, 0);
         
         if (iResult != SOCKET_ERROR)
         {
-            printf("[WORKER WRITE]: sent: %s.\n", messageBuff);
+            //printf("[WORKER WRITE]: sent: %s.\n", messageBuff);
             if (strstr(msg->bufferNoName, "exit") != NULL) {
                 printf("[WORKER WRITE]: Worker process signig off.\n");
                 break;
@@ -92,36 +95,34 @@ DWORD WINAPI worker_read(LPVOID param) {
     //OR if we got a message from worker
     do
     {
+        while (!is_socket_ready(acceptedSocket, true)) {
+        }
         
         int iResult = recv(acceptedSocket, dataBuffer, BUFFER_SIZE, 0);
         int msgLen = (int)dataBuffer[0];
         if (iResult != SOCKET_ERROR)	// Check if message is successfully received
         {
 
+            
+
             int iResult2 = 0;
             char messagePart[BUFFER_SIZE];//delimiter + success
             while (iResult != msgLen) {
                 iResult2 = recv(acceptedSocket, messagePart, BUFFER_SIZE, 0);
-                //strcpy(dataBuffer + iResult, dataBuffer2);
                 memcpy(dataBuffer + strlen(dataBuffer + 1) + 1, messagePart, (int)strlen(messagePart));
                 iResult += iResult2;
             }
             dataBuffer[iResult] = '\0';
+#ifdef DEBUG
             printf("[WORKER READ] Worker sent: %s.\n", dataBuffer);
-
+#endif
             if (strstr(dataBuffer + 1, ":exit") != NULL) {
                 printf("[WORKER READ] Worker sent exit. Worker proccess signing off.\n");
                
                 iResult = shutdown(new_node->acceptedSocket, SD_BOTH);
-                closesocket(new_node->acceptedSocket);
+                //closesocket(new_node->acceptedSocket);
                
                 delete_node(new_node, busy_workers_list);
-                //free(new_node->msgStruct);
-               //free(new_node);
-               //new_node = NULL;
-               //TerminateThread(new_node->thread_write, 0);
-               //TerminateThread(GetCurrentThread(), 0);
-               //CloseHandle(new_node->thread_write);
                 return 0;
             }
 
@@ -141,22 +142,28 @@ DWORD WINAPI worker_read(LPVOID param) {
             client_thread* foundClient = lookup_client(clientName);
 
             if (foundClient) {
+                
+                while (!is_socket_ready(acceptedSocket, false)) {
+                }
+
                 iResult = send(foundClient->acceptedSocket, bufferForClient, (int)strlen(bufferForClient), 0);
                 memset(bufferForClient, 0, BUFFER_SIZE);
                 memset(clientName, 0, sizeof(clientName));
 
                 if (iResult != SOCKET_ERROR)	// Check if message is successfully received
                 {
+#ifdef DEBUG
                     printf("[WORKER]: returned to client: %s\n", dataBuffer);
+#endif
                    
                 }
                 else {
                     if (WSAGetLastError() == WSAEWOULDBLOCK) {
-                       // continue;
+                       
                     }
                     else {
                         printf("[WORKER]: send to client failed with error: %d\n", WSAGetLastError());
-                        //break;
+                        
                     }
                 }
             }
@@ -179,12 +186,22 @@ DWORD WINAPI worker_read(LPVOID param) {
             }
             else {
                 printf("[WORKER READ]: recv failed with error: %d\n", WSAGetLastError());
-                //TerminateThread(GetCurrentThread(), 0);
                 break;
             }
         }
         
     } while (true);
+
+    int iResult = shutdown(acceptedSocket, SD_BOTH);
+    //// Check if connection is succesfully shut down.
+    if (iResult == SOCKET_ERROR)
+    {
+        printf("shutdown failed with error: %d\n", WSAGetLastError());
+        closesocket(acceptedSocket);
+        WSACleanup();
+        return 1;
+    }
+    closesocket(acceptedSocket);
 
     return 0;
 }
@@ -307,19 +324,10 @@ DWORD WINAPI worker_listener(LPVOID param) {
             }
         }
     } while (true);
-    // Shutdown the connection since we're done
-    //iResult = shutdown(acceptedSocket, SD_BOTH);
-    //// Check if connection is succesfully shut down.
-    //if (iResult == SOCKET_ERROR)
-    //{
-    //    printf("shutdown failed with error: %d\n", WSAGetLastError());
-    //    closesocket(acceptedSocket);
-    //    WSACleanup();
-    //    return 1;
-    //}
-    //Close listen and accepted sockets
+    
     closesocket(listenSocket);
-    //closesocket(acceptedSocket);
+    
+
     // Deinitialize WSA library
     WSACleanup();
     return 0;

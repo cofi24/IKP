@@ -1,7 +1,1 @@
-﻿  Worker.cpp
-C:\Users\cofi24\Desktop\Git uploads\IKP\IKP-main\Client\Worker\Worker.cpp(22,9): warning C4005: 'BUFFER_SIZE': macro redefinition
-      C:\Users\cofi24\Desktop\Git uploads\IKP\IKP-main\Client\Worker\Worker.cpp(20,9):
-      see previous definition of 'BUFFER_SIZE'
-  
-C:\Users\cofi24\Desktop\Git uploads\IKP\IKP-main\Client\Worker\Worker.cpp(109,33): warning C4267: 'initializing': conversion from 'size_t' to 'char', possible loss of data
-  Worker.vcxproj -> C:\Users\cofi24\Desktop\Git uploads\IKP\IKP-main\Client\x64\Debug\Worker.exe
+﻿  Worker.vcxproj -> C:\Users\10\Desktop\gitfolder\IKP\IKP-main\Client\x64\Debug\Worker.exe

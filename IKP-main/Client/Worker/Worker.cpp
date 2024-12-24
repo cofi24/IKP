@@ -23,6 +23,27 @@
 #define RET_BUFFER_SIZE BUFFER_SIZE+9
 #define CLIENT_NAME_LEN 10
 
+bool is_socket_ready(SOCKET socket, bool isRead) {
+    FD_SET set;
+    timeval tv;
+    FD_ZERO(&set);
+    FD_SET(socket, &set);
+    tv.tv_sec = 0;
+    tv.tv_usec = 50;
+    int iResult;
+    if (isRead) { //see if socket is ready for READ
+        iResult = select(0, &set, NULL, NULL, &tv);
+    }
+    else {	//see if socket is ready for WRITE
+        iResult = select(0, NULL, &set, NULL, &tv);
+    }
+    if (iResult <= 0)
+        return false;
+    else
+        return true;
+}
+
+
 // TCP client that use blocking sockets
 int main()
 {
@@ -78,6 +99,9 @@ int main()
 
     while (true) {
 
+        while (!is_socket_ready(connectSocket, true)) {
+        }
+
         iResult = recv(connectSocket, dataBuffer, BUFFER_SIZE, 0);
         if (iResult !=SOCKET_ERROR)	// Check if message is successfully received
         {
@@ -109,11 +133,13 @@ int main()
                 char messageLen = strlen(dataBuffer2 + 1)+1;
                 memset(dataBuffer2, messageLen, 1);
 
+                while (!is_socket_ready(connectSocket, false)) {
+                }
 
                 iResult = send(connectSocket, dataBuffer2, (int)strlen(dataBuffer2), 0);
                 if (iResult != SOCKET_ERROR)	// Check if message is successfully received
                 {
-                    printf("[WORKER]: returned to load balancer %s\n", dataBuffer2);
+                   // printf("[WORKER]: returned to load balancer %s\n", dataBuffer2);
                     if (strstr(dataBuffer2, ":exit") != NULL)
                         break;
                 }
@@ -127,13 +153,13 @@ int main()
            // }
 
             // Check result of send function
-            if (iResult == SOCKET_ERROR)
+           /**if (iResult == SOCKET_ERROR)
             {
                 printf("[WORKER]: send failed with error: %d\n", WSAGetLastError());
                 closesocket(connectSocket);
                 WSACleanup();
                 return 1;
-            }
+            }*/
 
         }
         else  {
@@ -164,7 +190,7 @@ int main()
 
     // For demonstration purpose
     printf("\nPress any key to exit: ");
-    _getch();
+   // _getch();
 
 
     // Close connected socket
